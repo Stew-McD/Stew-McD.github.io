@@ -1,0 +1,12 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+width='600px' height='400px' viewBox='0 0 600 400'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='600.0' height='400.0' x='0.0' y='0.0'> </rect>
+<path class='bond-0 atom-0 atom-1' d='M 30.0,159.5 L 570.0,159.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<path class='bond-0 atom-0 atom-1' d='M 30.0,240.5 L 570.0,240.5' style='fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:2.0px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1' />
+<text x="20" y="10" font-family="Arial Narrow" font-size="12">CAS:74-85-1  ---  MW: 28.0536</text><text x="20" y="25" font-family="Arial Narrow" font-size="8">SMILES: C=C</text><text x="20" y="35" font-family="Arial Narrow" font-size="8">Formula: C2H4</text><text x="20" y="370" font-family="Arial Narrow" font-size="12">ecoinvent: ethylene</text><text x="20" y="385" font-family="Arial Narrow" font-size="12">IUPAC: Ethene</text></svg>

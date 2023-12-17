@@ -1,0 +1,66 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+width='600px' height='400px' viewBox='0 0 600 400'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='600.0' height='400.0' x='0.0' y='0.0'> </rect>
+<path class='atom-0' d='M 122.4 200.8
+Q 122.4 193.8, 125.7 190.1
+Q 129.0 186.4, 135.3 186.4
+Q 141.2 186.4, 144.3 190.5
+L 141.6 192.6
+Q 139.4 189.6, 135.3 189.6
+Q 131.0 189.6, 128.8 192.5
+Q 126.5 195.4, 126.5 200.8
+Q 126.5 206.4, 128.8 209.3
+Q 131.2 212.2, 135.8 212.2
+Q 138.9 212.2, 142.5 210.3
+L 143.6 213.3
+Q 142.2 214.2, 139.9 214.8
+Q 137.7 215.4, 135.2 215.4
+Q 129.0 215.4, 125.7 211.6
+Q 122.4 207.8, 122.4 200.8
+' fill='#00CC00'/>
+<path class='atom-0' d='M 147.2 184.6
+L 150.9 184.6
+L 150.9 215.0
+L 147.2 215.0
+L 147.2 184.6
+' fill='#00CC00'/>
+<path class='atom-0' d='M 155.7 190.3
+L 165.4 190.3
+L 165.4 192.5
+L 155.7 192.5
+L 155.7 190.3
+' fill='#00CC00'/>
+<path class='atom-1' d='M 441.1 185.7
+L 444.9 185.7
+L 444.9 214.0
+L 441.1 214.0
+L 441.1 185.7
+M 456.9 185.7
+L 462.1 185.7
+L 450.9 198.5
+L 462.9 214.0
+L 457.9 214.0
+L 445.8 198.7
+L 456.9 185.7
+' fill='#000000'/>
+<path class='atom-1' d='M 465.2 190.8
+L 470.2 190.8
+L 470.2 185.5
+L 472.4 185.5
+L 472.4 190.8
+L 477.6 190.8
+L 477.6 192.7
+L 472.4 192.7
+L 472.4 197.9
+L 470.2 197.9
+L 470.2 192.7
+L 465.2 192.7
+L 465.2 190.8
+' fill='#000000'/>
+<text x="20" y="10" font-family="Arial Narrow" font-size="12">CAS:7447-40-7  ---  MW: 74.551</text><text x="20" y="25" font-family="Arial Narrow" font-size="8">SMILES: [Cl-].[K+]</text><text x="20" y="35" font-family="Arial Narrow" font-size="8">Formula: ClK</text><text x="20" y="370" font-family="Arial Narrow" font-size="12">ecoinvent: potassium chloride, industrial grade</text><text x="20" y="385" font-family="Arial Narrow" font-size="12">IUPAC: Potassium chloride</text></svg>

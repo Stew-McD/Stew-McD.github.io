@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+width='600px' height='400px' viewBox='0 0 600 400'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='600.0' height='400.0' x='0.0' y='0.0'> </rect>
+<path class='atom-0' d='M 303.8 214.0
+L 300.2 214.0
+L 297.2 190.8
+L 289.6 214.0
+L 285.7 214.0
+L 278.1 190.8
+L 275.1 214.0
+L 271.5 214.0
+L 275.1 185.7
+L 279.8 185.7
+L 287.7 208.5
+L 295.5 185.7
+L 300.2 185.7
+L 303.8 214.0
+' fill='#000000'/>
+<path class='atom-0' d='M 309.0 203.7
+Q 309.0 198.7, 311.5 195.9
+Q 314.1 193.1, 318.8 193.1
+Q 323.5 193.1, 326.0 195.9
+Q 328.5 198.7, 328.5 203.7
+Q 328.5 208.7, 326.0 211.5
+Q 323.5 214.3, 318.8 214.3
+Q 314.1 214.3, 311.5 211.5
+Q 309.0 208.7, 309.0 203.7
+M 312.9 203.7
+Q 312.9 207.4, 314.4 209.4
+Q 315.9 211.4, 318.8 211.4
+Q 321.6 211.4, 323.1 209.4
+Q 324.7 207.4, 324.7 203.7
+Q 324.7 199.9, 323.1 198.0
+Q 321.6 196.0, 318.8 196.0
+Q 315.9 196.0, 314.4 198.0
+Q 312.9 199.9, 312.9 203.7
+' fill='#000000'/>
+<text x="20" y="10" font-family="Arial Narrow" font-size="12">CAS:7439-98-7  ---  MW: 95.96</text><text x="20" y="25" font-family="Arial Narrow" font-size="8">SMILES: [Mo]</text><text x="20" y="35" font-family="Arial Narrow" font-size="8">Formula: Mo</text><text x="20" y="370" font-family="Arial Narrow" font-size="12">ecoinvent: molybdenum</text><text x="20" y="385" font-family="Arial Narrow" font-size="12">IUPAC: Molybdenum</text></svg>

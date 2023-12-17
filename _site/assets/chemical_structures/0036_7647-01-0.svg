@@ -1,0 +1,67 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+width='600px' height='400px' viewBox='0 0 600 400'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='600.0' height='400.0' x='0.0' y='0.0'> </rect>
+<path class='atom-0' d='M 435.2 185.7
+L 439.0 185.7
+L 439.0 197.7
+L 453.5 197.7
+L 453.5 185.7
+L 457.3 185.7
+L 457.3 214.0
+L 453.5 214.0
+L 453.5 200.9
+L 439.0 200.9
+L 439.0 214.0
+L 435.2 214.0
+L 435.2 185.7
+' fill='#000000'/>
+<path class='atom-0' d='M 462.8 190.8
+L 467.8 190.8
+L 467.8 185.5
+L 470.0 185.5
+L 470.0 190.8
+L 475.1 190.8
+L 475.1 192.7
+L 470.0 192.7
+L 470.0 197.9
+L 467.8 197.9
+L 467.8 192.7
+L 462.8 192.7
+L 462.8 190.8
+' fill='#000000'/>
+<path class='atom-1' d='M 124.9 200.8
+Q 124.9 193.8, 128.2 190.1
+Q 131.5 186.4, 137.8 186.4
+Q 143.6 186.4, 146.7 190.5
+L 144.1 192.6
+Q 141.8 189.6, 137.8 189.6
+Q 133.5 189.6, 131.2 192.5
+Q 129.0 195.4, 129.0 200.8
+Q 129.0 206.4, 131.3 209.3
+Q 133.6 212.2, 138.2 212.2
+Q 141.3 212.2, 145.0 210.3
+L 146.1 213.3
+Q 144.6 214.2, 142.4 214.8
+Q 140.1 215.4, 137.6 215.4
+Q 131.5 215.4, 128.2 211.6
+Q 124.9 207.8, 124.9 200.8
+' fill='#00CC00'/>
+<path class='atom-1' d='M 149.7 184.6
+L 153.3 184.6
+L 153.3 215.0
+L 149.7 215.0
+L 149.7 184.6
+' fill='#00CC00'/>
+<path class='atom-1' d='M 158.1 190.3
+L 167.8 190.3
+L 167.8 192.5
+L 158.1 192.5
+L 158.1 190.3
+' fill='#00CC00'/>
+<text x="20" y="10" font-family="Arial Narrow" font-size="12">CAS:7647-01-0  ---  MW: 36.4609</text><text x="20" y="25" font-family="Arial Narrow" font-size="8">SMILES: [H+].[Cl-]</text><text x="20" y="35" font-family="Arial Narrow" font-size="8">Formula: ClH</text><text x="20" y="370" font-family="Arial Narrow" font-size="12">ecoinvent: hydrochloric acid, without water, in 30% solution state</text><text x="20" y="385" font-family="Arial Narrow" font-size="12">IUPAC: ['hydrogen chloride', 'hydron chloride']</text></svg>

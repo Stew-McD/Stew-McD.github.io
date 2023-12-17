@@ -1,0 +1,72 @@
+<?xml version='1.0' encoding='iso-8859-1'?>
+<svg version='1.1' baseProfile='full'
+              xmlns='http://www.w3.org/2000/svg'
+                      xmlns:rdkit='http://www.rdkit.org/xml'
+                      xmlns:xlink='http://www.w3.org/1999/xlink'
+                  xml:space='preserve'
+width='600px' height='400px' viewBox='0 0 600 400'>
+<!-- END OF HEADER -->
+<rect style='opacity:1.0;fill:#FFFFFF;stroke:none' width='600.0' height='400.0' x='0.0' y='0.0'> </rect>
+<path class='atom-0' d='M 270.9 178.6
+L 280.2 193.6
+Q 281.1 195.1, 282.6 197.8
+Q 284.1 200.5, 284.2 200.6
+L 284.2 178.6
+L 287.9 178.6
+L 287.9 206.9
+L 284.0 206.9
+L 274.1 190.5
+Q 272.9 188.6, 271.7 186.4
+Q 270.5 184.2, 270.1 183.5
+L 270.1 206.9
+L 266.4 206.9
+L 266.4 178.6
+L 270.9 178.6
+' fill='#0000FF'/>
+<path class='atom-0' d='M 293.3 178.6
+L 297.2 178.6
+L 297.2 190.7
+L 311.7 190.7
+L 311.7 178.6
+L 315.5 178.6
+L 315.5 206.9
+L 311.7 206.9
+L 311.7 193.9
+L 297.2 193.9
+L 297.2 206.9
+L 293.3 206.9
+L 293.3 178.6
+' fill='#0000FF'/>
+<path class='atom-0' d='M 330.0 211.3
+Q 331.8 211.8, 332.7 213.0
+Q 333.6 214.1, 333.6 216.0
+Q 333.6 217.6, 332.8 218.8
+Q 332.0 220.0, 330.5 220.7
+Q 329.1 221.4, 327.2 221.4
+Q 325.2 221.4, 323.7 220.7
+Q 322.2 220.0, 321.0 218.5
+L 322.5 217.0
+Q 323.7 218.3, 324.6 218.8
+Q 325.6 219.3, 327.2 219.3
+Q 328.9 219.3, 329.9 218.4
+Q 330.9 217.4, 330.9 216.0
+Q 330.9 214.1, 329.8 213.2
+Q 328.8 212.3, 326.5 212.3
+L 325.1 212.3
+L 325.1 210.4
+L 326.3 210.4
+Q 328.4 210.4, 329.4 209.5
+Q 330.5 208.6, 330.5 207.0
+Q 330.5 205.8, 329.6 205.1
+Q 328.7 204.3, 327.2 204.3
+Q 325.6 204.3, 324.7 204.9
+Q 323.7 205.4, 323.0 206.8
+L 321.1 205.8
+Q 321.8 204.3, 323.4 203.3
+Q 325.0 202.2, 327.2 202.2
+Q 329.9 202.2, 331.5 203.5
+Q 333.2 204.8, 333.2 207.0
+Q 333.2 208.5, 332.3 209.6
+Q 331.5 210.7, 330.0 211.3
+' fill='#0000FF'/>
+<text x="20" y="10" font-family="Arial Narrow" font-size="12">CAS:7664-41-7  ---  MW: 17.0304</text><text x="20" y="25" font-family="Arial Narrow" font-size="8">SMILES: N</text><text x="20" y="35" font-family="Arial Narrow" font-size="8">Formula: H3N</text><text x="20" y="370" font-family="Arial Narrow" font-size="12">ecoinvent: ammonia, anhydrous, liquid</text><text x="20" y="385" font-family="Arial Narrow" font-size="12">IUPAC: ['$l^{1}-azane', 'azane']</text></svg>
