@@ -16,8 +16,8 @@ The source code, data and images related to processing the database and collecti
 
 # The structures
 
-On [this page](home/chemical_structures_gallery.html) you can find the images of the structures, sorted by molecular weight. The images are in SVG format, and are named `<mW>_<CAS>.svg`, where `<mW>` is the rounded molecular weight and `<CAS>` is the CAS number. Each image is annotated with the CAS number, ecoinvent name, IUPAC name, smiles string, formula and synonyms.
+On [this page](chemical_structures_gallery.html) you can find the images of the structures, sorted by molecular weight. The images are in SVG format, and are named `<mW>_<CAS>.svg`, where `<mW>` is the rounded molecular weight and `<CAS>` is the CAS number. Each image is annotated with the CAS number, ecoinvent name, IUPAC name, smiles string, formula and synonyms.
 
-The svg text should be searchable, so you can hit ctrl+f and search for whatever you are looking for and see the scructure and other infomation instantly.
+The svg text SHOULD be searchable, so you can hit ctrl+f and search for whatever you are looking for and see the scructure and other infomation instantly. (NOT WORKING RIGHT NOW)
 
 Ideally this presentation would be interactive somehow, with filtering and sorting options, but I don't have the time to do that right now. If you want to do it, feel free to fork the repo and make a pull request.

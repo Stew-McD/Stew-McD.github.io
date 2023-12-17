@@ -28,22 +28,28 @@
 
         .modal {
             display: none;
-            position: fixed; /* or 'fixed' */
+            position: fixed;
             z-index: 1;
             left: 0;
             top: 0;
             width: auto;
             height: auto;
-            overflow: none;
+            overflow: hidden;
             background-color: rgb(0, 0, 0);
             background-color: rgba(0, 0, 0, 0.9);
+            resize: both;
+            /* Enable resizing */
         }
 
         .modal-content {
-            margin: auto;
-            padding: 20px;
-            max-width: 90%;
-            max-height: 90%;
+            display: block;
+            /* Ensure the image is a block element */
+            width: 100%;
+            /* Initial width */
+            height: auto;
+            /* Maintain aspect ratio */
+            transition: width 0.2s;
+            /* Smooth transition for resizing */
         }
 
         .close {
@@ -94,26 +100,33 @@
             var modal = document.getElementById("myModal");
             modal.style.display = "none";
         }
-    </script>
-    <script>
+
+
         var modal = document.getElementById('myModal');
+        var modalImg = document.getElementById('img01');
         var mouseDown = false;
-        var startX, startY, initialX, initialY;
+        var startX, startY, startWidth, startHeight;
 
         modal.addEventListener('mousedown', function (e) {
-            mouseDown = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            initialX = modal.offsetLeft;
-            initialY = modal.offsetTop;
+            if (e.offsetX > modal.clientWidth - 15 || e.offsetY > modal.clientHeight - 15) {
+                mouseDown = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = modalImg.clientWidth;
+                startHeight = modalImg.clientHeight;
+            }
         });
 
         document.addEventListener('mousemove', function (e) {
             if (!mouseDown) return;
             var dx = e.clientX - startX;
             var dy = e.clientY - startY;
-            modal.style.left = initialX + dx + 'px';
-            modal.style.top = initialY + dy + 'px';
+
+            var newWidth = startWidth + dx;
+            var newHeight = startHeight + dy;
+
+            modalImg.style.width = newWidth + 'px';
+            modalImg.style.height = 'auto';
         });
 
         document.addEventListener('mouseup', function () {
