@@ -20,13 +20,16 @@
 
 title: Stew-McD - Science Stuff
 email: s.c.mcdowall@cml.leidenuniv.nl
-# description: >- # this means to ignore newlines until "baseurl:"
+description: Where I put websitey things # this means to ignore newlines until "baseurl:"
 baseurl: "/home" # the subpath of your site, e.g. /blog
 # url: "" # the base hostname & protocol for your site, e.g. http://example.com
 github_username:  Stew-McD
+google_analytics: 
 
 # Build settings
-theme: just-the-docs 
+remote_theme: pages-themes/cayman
+plugins:
+- jekyll-remote-theme # add this line to the plugins list if you already have one
 # aux_links:
 #   Template Repository: https://github.com/just-the-docs/just-the-docs-template
 
