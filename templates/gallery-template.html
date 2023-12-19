@@ -117,16 +117,18 @@
     <div class="body">
       <div id="sidebar" class="sidebar">
         <img class="modal-content" id="modalImage" />
+        <p>Click arrow and link below to see the search results (click again to refresh)</p>
         <span class="close" onclick="closeSidebar()">&times;</span>
         <details>
           <summary>
-            <a id="ecoLink" target="ecoFrame">Click arrow and text to view in ecoinvent ecoquery</a>
+            <a id="ecoLink" target="ecoFrame">ecoinvent ecoquery </a>
           </summary>
+          <p>If unreliable with the CAS number, try with a name search</p>
           <iframe name="ecoFrame"></iframe>
         </details>
         <details>
           <summary>
-            <a id="pubchemLink" target="pubchemFrame">Click arrow and text to view in PubChem</a>
+            <a id="pubchemLink" target="pubchemFrame">PubChem</a>
           </summary>
           <iframe name="pubchemFrame"></iframe>
         </details>
