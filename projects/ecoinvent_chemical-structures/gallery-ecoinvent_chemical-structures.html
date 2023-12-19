@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chemical structure gallery | ecoinvent 3.10</title>
+    <style>
+      .header {
+        background-color: #f8f9fa00; /* Change this to your preferred color */
+        z-index: 100; /* This will keep the header above other elements */
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 20;
+      }
+      
+      .body {
+        padding-top: 70px; /* This will prevent the header from covering the content */
+      }
+      .main-text {
+        background-color: #b5a9d4; /* Pastel Purple */
+        color: #000000; /* Black */
+      }
+      .grid-container {
+        flex-grow: 1; /* This will make the grid container take up the remaining space */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      
+      .grid-item {
+        border: 1px solid #ddd;
+        padding: 1px;
+        text-align: center;
+        overflow: auto;
+        cursor: pointer;
+      }
+      
+      .svg-image {
+        width: 100%; /* This will make the images take up the full width of the grid item */
+        height: auto;
+      }
+      
+      .sidebar {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 10%; /* Offset to not cover the title */
+        bottom: 1%;
+        width: 32%;
+        height: 95vh;
+        overflow: auto;
+        padding: 10px;
+        resize: horizontal;
+        overflow: auto;
+        min-width: 150px; /* Set the minimum width the user can resize the sidebar to */
+        max-width: 80%; /* Set the maximum width the user can resize the sidebar to */
+        background-color: #B2D8B2
+        border: 1px solid #ddd;
+      }
+      
+      .modal-content {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        transition: all 0.2s;
+        z-index: 4;
+      }
+      
+      .close {
+        color: black;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #f7f3f9;
+      
+        cursor: pointer;
+      }
+      
+      details {
+        margin-bottom: 1px;
+        padding: 1px;
+        border-radius: 1px;
+        margin-top: 1px;
+      }
+      
+      summary {
+        padding: 1px;
+        font-weight: bold;
+        margin-bottom: 1px;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 95vh;
+        border: 2px;
+      }
+      .main-text {
+    background-color: #B5A9D4; /* Pastel Purple */
+    color: #000000; /* Black */
+}
+
+.modal-bar {
+    background-color: #B2D8B2; /* Pastel Green */
+    color: #000000; /* Black */
+}
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <header>
+        <h1 style="text-align: center;">Chemical structure gallery | ecoinvent 3.10</h1>
+      </header>
+    </div>
+    <div class="body">
+      <div id="sidebar" class="sidebar">
+        <img class="modal-content" id="modalImage" />
+        <span class="close" onclick="closeSidebar()">&times;</span>
+        <details>
+          <summary>
+            <a id="ecoLink" target="ecoFrame">Click arrow and text to view in ecoinvent ecoquery</a>
+          </summary>
+          <iframe name="ecoFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a id="pubchemLink" target="pubchemFrame">Click arrow and text to view in PubChem</a>
+          </summary>
+          <iframe name="pubchemFrame"></iframe>
+        </details>
+      </div>
+
+      <div id="grid-container" class="grid-container">
+        <!-- Images will be inserted here by JavaScript -->
+      </div>
+
+      <script>
+        var imagePaths = ["../../assets/projects/ecoinvent_chemical-structures/images/0959_1163-19-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0924_16090-02-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0883_68003-50-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0646_31570-04-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0587_76738-62-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0562_27344-41-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0541_8018-01-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0515_25154-01-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0401_53819-72-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0399_10028-22-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0397_12032-20-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0394_1314-37-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0393_67-43-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0390_6422-86-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0385_12036-44-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0383_69806-50-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0382_12061-16-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0379_14807-96-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0377_12055-62-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0376_67747-09-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0372_1308-87-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0370_1689-83-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0370_123-79-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0369_120923-37-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0367_7758-29-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0365_12037-01-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0362_12064-62-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0351_39148-24-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0351_1308-96-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0348_12060-58-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0346_1066-33-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0336_1313-97-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0329_12036-32-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0327_1330-43-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0326_1843-05-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0326_115-86-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0325_1312-81-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0320_13499-05-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0314_15630-89-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0307_107534-96-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0307_10486-00-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0300_133-06-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0296_133-07-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0292_60-00-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0290_25037-45-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0288_678-26-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0287_120-40-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0284_57-11-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0283_51218-45-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0283_11120-25-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0281_40487-42-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0281_10124-43-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0277_67129-08-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0277_12001-29-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0276_1689-84-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0275_87674-68-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0275_12122-67-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0271_15299-99-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0265_7722-88-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0265_4422-95-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0265_1897-45-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0265_12427-38-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0264_74070-46-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0261_10588-01-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0258_10043-01-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0257_34622-58-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0256_55335-06-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0253_7553-56-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0252_7757-83-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0251_52888-80-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0250_101-68-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0244_15245-12-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0243_7440-36-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0240_9000-11-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0240_1306-25-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0238_7775-27-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0233_7727-43-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0233_10026-11-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0228_80-05-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0228_32131-17-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0225_1314-36-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0225_1214-39-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0222_4098-71-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0221_1698-60-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0215_1912-24-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0214_93-65-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0213_101-21-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0212_15545-48-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0212_10213-79-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0211_9003-56-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0208_85-47-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0208_84-65-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0208_78-10-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0208_1008-72-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0208_10026-13-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0207_7439-92-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0206_96-76-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0206_34123-59-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0206_128-39-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0204_124-17-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0204_12023-22-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0203_133-32-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0202_41394-05-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0200_7439-97-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0197_513-77-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0196_7440-57-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0195_7440-06-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0195_12070-12-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0192_77-92-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0190_7681-57-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0189_7550-45-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0187_106-93-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0186_86-87-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0186_1302-37-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0186_112-53-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0184_16389-88-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0184_108-77-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0183_7759-02-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0183_14940-68-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0183_10108-64-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0182_121-14-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0180_7440-25-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0180_50-99-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0178_7440-58-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0177_71-48-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0176_50-81-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0176_108-62-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0174_7778-80-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0174_7775-14-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0174_584-84-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0172_13397-24-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0172_1306-38-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0172_1194-65-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0171_17194-00-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0170_101-84-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0169_21109-95-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0169_1071-83-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0169_10026-04-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0168_822-06-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0166_100-21-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0165_127-18-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0164_10124-37-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0163_7601-54-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0163_76-03-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0163_120-83-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0162_939-97-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0162_7705-08-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0161_999-97-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0161_98-87-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0161_95-73-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0161_7733-02-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0160_1596-84-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0160_1317-33-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0159_7758-98-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0158_999-81-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0157_88-73-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0157_1317-34-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0157_12168-52-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0154_7786-81-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0154_76-15-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0153_56-23-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0153_1304-28-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0153_10025-87-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0151_7720-78-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0151_21324-40-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0150_7785-87-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0150_18282-10-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0150_112-27-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0149_24307-26-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0149_102-71-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0148_98-51-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0148_85-44-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0148_34590-94-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0147_95-50-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0147_85-41-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0147_1633-05-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0147_106-46-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0146_2551-62-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0146_124-04-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0146_110-03-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0144_90-15-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0144_16672-87-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0144_140-90-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0144_1306-23-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0143_1313-27-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0143_12044-25-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0142_7757-82-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0142_142-30-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0141_74-88-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0140_89-98-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0140_15978-77-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0139_88-75-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0139_100-02-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0138_88-74-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0138_7778-74-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0138_76-16-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0138_69-72-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0138_584-08-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_99-99-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_99-08-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_88-72-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_7719-12-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_12060-08-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0137_118-92-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0136_7778-18-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0136_115-77-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0136_103-82-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0135_103-84-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0134_7791-25-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0133_7446-70-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0132_7783-28-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0132_7783-20-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0132_108-59-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0131_79-01-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0131_7440-63-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0130_123-92-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0130_10034-93-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0129_75-78-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0128_141-32-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0128_106-48-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0127_13494-80-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0126_95-49-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0126_77-78-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0126_108-78-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0126_100-44-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0123_98-95-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0123_1314-23-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0123_12185-10-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0123_1184-64-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0122_7601-89-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0122_6834-92-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0122_65-85-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0122_106-94-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0120_98-82-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0120_7681-38-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0120_75-71-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0120_7487-88-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0119_67-66-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0119_1309-36-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0119_103-71-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_7719-09-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_7440-31-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_629-14-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_513-79-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_51-17-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_3852-09-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0118_110-15-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0117_10294-34-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_7790-94-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_3926-62-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_139-02-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_124-09-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_123-86-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_123-77-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0116_110-19-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0115_7722-76-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0115_25038-54-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0114_76-05-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0114_7440-74-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0114_24937-78-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0112_79-04-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0112_7440-43-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0112_123-33-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0112_108-90-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0110_123-31-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0110_108-46-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0110_10043-52-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0109_95-55-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0109_13755-29-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0109_10377-48-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_95-54-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_95-48-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_598-78-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_111-69-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_106-50-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0108_100-51-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0107_7440-22-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_95-47-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_7775-09-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_7440-05-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_111-46-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_106-42-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_100-52-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0106_100-41-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0105_497-19-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0105_111-42-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0104_9003-53-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0104_100-42-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0103_7631-90-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0103_121-43-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_811-97-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_7440-16-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_637-92-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_541-50-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_109-55-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_108-24-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_108-21-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0102_10545-99-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0101_9011-14-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0101_7757-79-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0101_142-84-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0101_121-44-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_80-62-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_471-34-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_142-82-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_1317-65-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_116-14-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_108-93-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0100_108-10-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0099_872-50-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0099_1333-82-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0099_10332-33-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_7664-93-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_75-44-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_1638-26-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_108-94-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_108-87-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_108-31-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0098_107-06-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0097_7664-38-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0097_5329-14-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0097_1314-98-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0096_9002-85-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0096_75-75-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0096_506-87-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0095_7786-30-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0095_7439-98-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0095_142-08-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0094_79-11-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0094_504-29-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0094_108-95-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0093_62-53-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0093_2122-46-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0093_109-06-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0093_108-99-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0092_56-81-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0092_108-88-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0092_106-89-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0092_10544-72-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0091_7440-67-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_616-38-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_563-47-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_50-21-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_144-62-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_110-80-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_110-71-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_110-63-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0090_107-98-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_96-49-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_9009-54-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_75-85-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_71-41-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_1634-04-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_141-78-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_137-32-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_123-91-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0088_123-51-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0087_127-19-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0087_110-91-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_96-48-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_96-33-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_872-36-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_79-41-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_79-29-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_75-45-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_1313-13-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_110-54-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_108-05-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0086_107-83-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0085_75-86-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0085_372-09-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0085_110-89-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_96-37-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_7631-99-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_75-09-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_144-55-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_120-92-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0084_110-82-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0083_7784-18-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0083_7439-90-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0081_289-96-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0081_1314-13-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0081_11138-49-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0080_7446-11-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0080_6484-52-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0080_289-80-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0080_14265-45-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0080_107-30-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0079_7726-95-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0079_13463-67-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0079_1317-38-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0079_1313-82-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0079_110-86-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0078_7782-49-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0078_75-36-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0078_71-43-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0078_67-68-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0078_14542-23-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0076_75-15-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0076_57-55-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0076_1762-95-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0076_107-05-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0075_56-40-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0075_12672-51-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_9016-00-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_79-20-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_79-09-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_78-92-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_78-83-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_7784-42-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_7681-52-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_7447-40-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_71-36-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_60-29-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_1307-96-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0074_1305-62-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0073_75-64-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0073_68-12-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0073_554-13-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0072_79-10-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0072_78-93-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0072_109-99-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0072_109-66-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0071_79-06-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0070_7782-50-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0070_75-46-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0069_7440-55-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0069_1303-86-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0068_7632-00-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0068_288-32-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0068_288-13-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0068_141-53-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0068_141-52-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0067_7637-07-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0067_10049-04-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0066_75-37-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0065_7440-66-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0064_75-20-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0064_7446-09-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0064_13446-48-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0063_7697-37-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0063_7440-50-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0062_9002-86-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0062_75-18-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0062_75-01-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0062_107-21-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0061_506-77-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0061_141-43-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0061_1313-59-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0061_10043-35-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_71-23-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_67-63-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_64-19-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_57-13-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_107-31-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0060_107-15-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0059_75-50-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0059_75-31-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0059_107-10-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_7647-14-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_75-56-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_75-28-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_7440-48-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_7440-02-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_67-64-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_123-38-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_107-22-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0058_106-97-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_9003-17-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_16721-80-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_1310-58-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_1305-78-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_107-02-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0056_106-98-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0055_7439-89-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0055_74-94-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0055_12069-32-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0054_7439-96-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0054_3100-04-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0054_124-41-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0054_106-99-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0053_12125-02-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0053_107-13-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0051_7440-47-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0050_74-87-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0049_143-33-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0048_24981-14-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0047_7440-32-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0046_75-02-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0046_64-18-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0046_64-17-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0046_115-10-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0046_10102-44-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0045_75-04-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0045_124-40-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0044_75-21-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0044_75-07-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0044_74-98-6.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0044_124-38-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0044_10024-97-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0043_13327-32-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0042_7447-41-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0042_115-07-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0041_7681-49-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0041_75-05-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0040_409-21-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0040_1309-48-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0039_7782-92-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0039_7440-37-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0039_1310-73-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0037_7782-41-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0036_7647-01-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0034_7783-06-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0034_7722-84-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0034_7704-34-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0033_7803-51-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0033_7803-49-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0032_67-56-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0032_302-01-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0031_7782-44-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0031_74-89-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0031_10102-43-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0030_74-84-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0030_50-00-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_9002-88-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_7803-62-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_7727-37-9.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_7440-21-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_74-85-1.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0028_630-08-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0027_74-90-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0026_7429-90-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0026_74-86-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0025_7789-24-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0025_19287-45-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0024_7439-95-4.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0023_1310-65-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0022_7440-23-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0020_7789-20-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0020_7664-39-3.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0018_7732-18-5.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0017_7664-41-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0016_74-82-8.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0012_7440-44-0.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0009_7440-41-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0006_7439-93-2.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0004_7440-59-7.svg",
+"../../assets/projects/ecoinvent_chemical-structures/images/0001_1333-74-0.svg"]
+        
+        var container = document.getElementById('grid-container')
+        
+        imagePaths.forEach(function (path) {
+          var div = document.createElement('div')
+          div.className = 'grid-item'
+          div.onclick = function () {
+            openModal(this)
+          }
+        
+          var img = document.createElement('img')
+          img.src = path
+          img.className = 'svg-image'
+          img.alt = 'Image'
+        
+          div.appendChild(img)
+          container.appendChild(div)
+        })
+        
+        function openModal(elem) {
+          var sidebar = document.getElementById('sidebar')
+          var modalImage = document.getElementById('modalImage')
+          sidebar.style.display = 'block'
+          container.style.marginLeft = '35%' // Adjust grid container
+          modalImage.src = elem.children[0].src
+        
+          var parts = elem.children[0].src.split('_')
+          var chemicalId = parts[parts.length - 1].split('.')[0]
+          var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
+          var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+        
+          document.getElementById('ecoLink').href = ecoUrl
+          document.getElementById('pubchemLink').href = pubchemUrl
+        }
+        
+        function closeSidebar() {
+          var sidebar = document.getElementById('sidebar')
+          sidebar.style.display = 'none'
+          container.style.marginLeft = '0' // Reset grid container
+        }
+        
+        function updateLinks(chemicalId) {
+          var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
+          var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+        
+          document.getElementById('ecoLink').href = ecoUrl
+          document.getElementById('pubchemLink').href = pubchemUrl
+        }
+        
+        document.querySelectorAll('.svg-image').forEach(function (img) {
+          img.addEventListener('click', function () {
+            var parts = this.src.split('_')
+            var chemicalId = parts[parts.length - 1].split('.')[0]
+            updateLinks(chemicalId)
+          })
+        })
+      </script>
+    </div>
+  </body>
+</html>

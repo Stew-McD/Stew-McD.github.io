@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PAGE_TITLE</title>
+    <style>
+      .header {
+        background-color: #f8f9fa00; /* Change this to your preferred color */
+        z-index: 100; /* This will keep the header above other elements */
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 20;
+      }
+      
+      .body {
+        padding-top: 70px; /* This will prevent the header from covering the content */
+      }
+      .main-text {
+        background-color: #b5a9d4; /* Pastel Purple */
+        color: #000000; /* Black */
+      }
+      .grid-container {
+        flex-grow: 1; /* This will make the grid container take up the remaining space */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        grid-gap: 0;
+        padding: 0;
+        overflow: auto;
+      }
+      
+      .grid-item {
+        border: 1px solid #ddd;
+        padding: 1px;
+        text-align: center;
+        overflow: auto;
+        cursor: pointer;
+      }
+      
+      .svg-image {
+        width: 100%; /* This will make the images take up the full width of the grid item */
+        height: auto;
+      }
+      
+      .sidebar {
+        display: none;
+        position: fixed;
+        z-index: 2;
+        left: 0;
+        top: 10%; /* Offset to not cover the title */
+        bottom: 1%;
+        width: 32%;
+        height: 95vh;
+        overflow: auto;
+        padding: 10px;
+        resize: horizontal;
+        overflow: auto;
+        min-width: 150px; /* Set the minimum width the user can resize the sidebar to */
+        max-width: 80%; /* Set the maximum width the user can resize the sidebar to */
+        background-color: #B2D8B2
+        border: 1px solid #ddd;
+      }
+      
+      .modal-content {
+        display: block;
+        width: 100%;
+        height: auto;
+        margin: 0;
+        transition: all 0.2s;
+        z-index: 4;
+      }
+      
+      .close {
+        color: black;
+        position: absolute;
+        top: 0;
+        right: 0;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      
+      .close:hover,
+      .close:focus {
+        color: #f7f3f9;
+      
+        cursor: pointer;
+      }
+      
+      details {
+        margin-bottom: 1px;
+        padding: 1px;
+        border-radius: 1px;
+        margin-top: 1px;
+      }
+      
+      summary {
+        padding: 1px;
+        font-weight: bold;
+        margin-bottom: 1px;
+      }
+      
+      iframe {
+        width: 100%;
+        height: 95vh;
+        border: 2px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <header>
+        <h1 style="text-align: center;">PAGE_TITLE</h1>
+      </header>
+    </div>
+    <div class="body">
+      <div id="sidebar" class="sidebar">
+        <img class="modal-content" id="modalImage" />
+        <span class="close" onclick="closeSidebar()">&times;</span>
+        <details>
+          <summary>
+            <a id="ecoLink" target="ecoFrame">Click arrow and text to view in ecoinvent ecoquery</a>
+          </summary>
+          <iframe name="ecoFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a id="pubchemLink" target="pubchemFrame">Click arrow and text to view in PubChem</a>
+          </summary>
+          <iframe name="pubchemFrame"></iframe>
+        </details>
+      </div>
+
+      <div id="grid-container" class="grid-container">
+        <!-- Images will be inserted here by JavaScript -->
+      </div>
+
+      <script>
+        var imagePaths = [IMAGE_PATH_LIST]
+        
+        var container = document.getElementById('grid-container')
+        
+        imagePaths.forEach(function (path) {
+          var div = document.createElement('div')
+          div.className = 'grid-item'
+          div.onclick = function () {
+            openModal(this)
+          }
+        
+          var img = document.createElement('img')
+          img.src = path
+          img.className = 'svg-image'
+          img.alt = 'Image'
+        
+          div.appendChild(img)
+          container.appendChild(div)
+        })
+        
+        function openModal(elem) {
+          var sidebar = document.getElementById('sidebar')
+          var modalImage = document.getElementById('modalImage')
+          sidebar.style.display = 'block'
+          container.style.marginLeft = '35%' // Adjust grid container
+          modalImage.src = elem.children[0].src
+        
+          var parts = elem.children[0].src.split('_')
+          var chemicalId = parts[parts.length - 1].split('.')[0]
+          var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
+          var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+        
+          document.getElementById('ecoLink').href = ecoUrl
+          document.getElementById('pubchemLink').href = pubchemUrl
+        }
+        
+        function closeSidebar() {
+          var sidebar = document.getElementById('sidebar')
+          sidebar.style.display = 'none'
+          container.style.marginLeft = '0' // Reset grid container
+        }
+        
+        function updateLinks(chemicalId) {
+          var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
+          var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+        
+          document.getElementById('ecoLink').href = ecoUrl
+          document.getElementById('pubchemLink').href = pubchemUrl
+        }
+        
+        document.querySelectorAll('.svg-image').forEach(function (img) {
+          img.addEventListener('click', function () {
+            var parts = this.src.split('_')
+            var chemicalId = parts[parts.length - 1].split('.')[0]
+            updateLinks(chemicalId)
+          })
+        })
+      </script>
+    </div>
+  </body>
+</html>

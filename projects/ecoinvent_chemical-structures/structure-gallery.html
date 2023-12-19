@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chemical structure gallery | ecoinvent 3.10</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: 250px;
+            height: 90vh;
+            position: fixed;
+            z-index: 2;
+            top: 10vh;
+            /* Below the title */
+            left: 0;
+            background-color: #f3f3f3;
+            overflow-x: hidden;
+            padding: 20px;
+            resize: horizontal;
+            overflow: auto;
+            border-right: 1px solid #ddd;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-gap: 0;
+            padding: 0;
+            margin-left: 250px;
+            /* Space for sidebar */
+        }
+
+        .grid-item {
+            border: 1px solid #ddd;
+            padding: 1px;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .svg-image {
+            width: 100%;
+            height: auto;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: auto;
+            height: auto;
+            overflow: hidden;
+            background-color: rgba(0, 0, 0, 0.9);
+            resize: both;
+        }
+
+        .modal-content {
+            display: block;
+            width: 100%;
+            height: auto;
+            transition: width 0.2s;
+        }
+
+        .close {
+            color: white;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #999;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Additional Styles for Buttons */
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            margin: 8px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">Chemical structure gallery | ecoinvent 3.10</h1>
+
+    <div class="sidebar">
+        <!-- Sidebar content: buttons, dropdowns etc. -->
+        <button>Button 1</button>
+        <button>Button 2</button>
+        <!-- More buttons or other elements -->
+    </div>
+
+    <div class="grid-container" id="grid-container">
+        <!-- Images will be inserted here by JavaScript -->
+    </div>
+
+    <script>
+        // Replace these with the actual paths to your images
+        var imagePaths = [
+            IMAGE_PATH_LIST
+        ];
+
+        var container = document.getElementById("grid-container");
+
+        imagePaths.forEach(function (path) {
+            var div = document.createElement("div");
+            div.className = "grid-item";
+            div.onclick = function () { openModal(this); };
+
+            var img = document.createElement("img");
+            img.src = path;
+            img.className = "svg-image";
+            img.alt = "Image";
+
+            div.appendChild(img);
+            container.appendChild(div);
+        });
+
+        function openModal(elem) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = elem.children[0].src;
+        }
+
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        var modal = document.getElementById('myModal');
+        var modalImg = document.getElementById('img01');
+        var mouseDown = false;
+        var startX, startY, startWidth, startHeight;
+
+        modal.addEventListener('mousedown', function (e) {
+            if (e.offsetX > modal.clientWidth - 15 || e.offsetY > modal.clientHeight - 15) {
+                mouseDown = true;
+                startX = e.clientX;
+                startY = e.clientY;
+                startWidth = modalImg.clientWidth;
+                startHeight = modalImg.clientHeight;
+            }
+        });
+
+        document.addEventListener('mousemove', function (e) {
+            if (!mouseDown) return;
+            var dx = e.clientX - startX;
+            var dy = e.clientY - startY;
+
+            var newWidth = startWidth + dx;
+            var newHeight = startHeight + dy;
+
+            modalImg.style.width = newWidth + 'px';
+            modalImg.style.height = 'auto';
+        });
+
+        document.addEventListener('mouseup', function () {
+            mouseDown = false;
+        });
+    </script>
+
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+</body>
+
+</html>
