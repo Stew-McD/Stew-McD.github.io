@@ -219,7 +219,7 @@
     // Create the Unsplash photo picker
     // To make this work, you need to code a backend API to serve Unsplash photos
     // For python flask, an example is "https://github.com/yenchiah/COCTEAU-TUD/blob/main/back-end/www/controllers/photos_controller.py"
-    // You need to change photoURL your API URL, such as "http://localhost:5000/photos/random?count=30"
+    // You need to change photoURL your API URL, such as "https://localhost:5000/photos/random?count=30"
     var photoURL = undefined; // for demo, the photo picker will load "file/photo.json"
     var $photoPickerDialog = widgets.createUnsplashPhotoPickerDialog("dialog-photo-picker", undefined, photoURL, function (d) {
       $("#vision-image").data("raw", d).prop("src", d["urls"]["regular"]);
