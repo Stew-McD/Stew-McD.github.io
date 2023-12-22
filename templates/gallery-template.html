@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <base href="/" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-93X03Q6586"></script>
     <script>
@@ -38,15 +39,13 @@
       }
       .header {
         background-color: #f8f9fa00; /* Change this to your preferred color */
-        z-index: 100; /* This will keep the header above other elements */
         text-align: center;
         position: fixed;
         top: 0;
-        left: 20;
       }
       
       .body {
-        padding-top: 70px; /* This will prevent the header from covering the content */
+        padding-top: 10px; /* This will prevent the header from covering the content */
       }
       .main-text {
         background-color: #b5a9d4; /* Pastel Purple */
@@ -79,25 +78,24 @@
         position: fixed;
         z-index: 2;
         left: 0;
-        top: 10%; /* Offset to not cover the title */
-        bottom: 1%;
+        top: 6%; /* Offset to not cover the title */
         width: 32%;
-        height: 95vh;
+        height: 90vh;
         overflow: auto;
         padding: 10px;
+        margin-bottom: 30px;
         resize: horizontal;
         overflow: auto;
         min-width: 150px; /* Set the minimum width the user can resize the sidebar to */
         max-width: 80%; /* Set the maximum width the user can resize the sidebar to */
-        background-color: #b2d8b2;
-        border: 1px solid #ddd;
+        background-color: #2e4714;
       }
       
       .modal-content {
         display: block;
         width: 100%;
         height: auto;
-        margin: 0;
+        margin: 10;
         transition: all 0.2s;
         z-index: 4;
       }
@@ -123,42 +121,44 @@
         padding: 1px;
         border-radius: 1px;
         margin-top: 1px;
+        margin-left: 5px;
+        margin-bottom: 5px;
       }
       
       summary {
-        padding: 1px;
-        font-weight: bold;
-        margin-bottom: 1px;
+        padding: 5px;
+        margin-bottom: 5px;
       }
       
       iframe {
         width: 100%;
         height: 80vh;
         border: 5px;
+        margin-bottom: 10px;
       }
     </style>
   </head>
   <body>
+    <div class="menu-container"></div>
     <div class="header">
-      <header>
-        <h2 style="text-align: center;">PAGE_TITLE</h2>
-      </header>
+      <header></header>
     </div>
     <div class="body">
+      <h2 style="text-align: center;">PAGE_TITLE</h2><br />
       <div id="sidebar" class="sidebar">
         <img class="modal-content" id="modalImage" />
-        <p>Click arrow and the link below to see the search results (click again to refresh)</p>
+        <p style="color: white;">Click arrow AND the link below to see the search results (click again to refresh)</p>
         <span class="close" onclick="closeSidebar()">&times;</span>
         <details>
           <summary>
-            <a id="ecoLink" target="ecoFrame">ecoinvent ecoquery</a>
+            <a style="color: white;" id="ecoLink" target="ecoFrame">ecoinvent ecoquery</a>
           </summary>
-          <p>If unreliable with the CAS number, try with a name search</p>
-          <iframe name="ecoFrame"></iframe>
+          <p style="color: white;">If unreliable with the CAS number, try with a name search</p>
+          <iframe style="color: white;" name="ecoFrame"></iframe>
         </details>
         <details>
           <summary>
-            <a id="pubchemLink" target="pubchemFrame">PubChem</a>
+            <a style="color: white;" id="pubchemLink" target="pubchemFrame">PubChem</a>
           </summary>
           <iframe name="pubchemFrame"></iframe>
         </details>
@@ -228,5 +228,6 @@
         })
       </script>
     </div>
+    <div class="footer-container"></div>
   </body>
 </html>

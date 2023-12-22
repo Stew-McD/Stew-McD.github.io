@@ -214,10 +214,10 @@ hr {
   position: absolute;
   background-color: #f9f9f9;
   min-width: 100px;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px #C29BC7;
   z-index: 1;
   top: 100%;
-  border-top: 3px solid #848484;
+  border-top: 3px solid #804887;
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px;
 }
@@ -277,7 +277,7 @@ hr {
 }
 
 .content-table {
-  padding: 40px 10px;
+  padding: 10px 10px;
   width: 100%;
   margin: 0;
 }
@@ -286,11 +286,11 @@ hr {
   position: relative;
   font-size: 16px;
   color: white;
-  font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
+  font-family: "Cabin", 'Source Sans Pro', Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
   overflow-x: auto;
-  background-color: #7421acff;
+  background-color: #804887;
   display: flex;
 }
 
@@ -320,8 +320,8 @@ hr {
 
 .banner .flex-item {
   max-width: 900px;
-  margin: 20px auto;
-  padding: 0 30px;
+  margin: 10px auto;
+  padding: 0 10px;
 }
 
 .flex-column {
