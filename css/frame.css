@@ -3,7 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: white;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', 'Open Sans', Helvetica, Arial, sans-serif;
   left: 0;
   right: 0;
   width: auto;
@@ -44,7 +44,7 @@ h1 {
   margin: 30px 0 0 0;
   padding: 0;
   font-weight: bold;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 h2 {
@@ -53,7 +53,7 @@ h2 {
   margin: 30px 0 0 0;
   padding: 0;
   font-weight: bold;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 h3 {
@@ -62,7 +62,7 @@ h3 {
   margin: 10px 0 0 0;
   padding: 0;
   font-weight: bold;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', 'Open Sans', Helvetica, Arial, sans-serif;
 }
 
 ul,
@@ -121,7 +121,7 @@ hr {
 
 .menu .logo a {
   color: rgba(255, 255, 255, 0.8);
-  font-family: 'Open Sans Condensed', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin Condensed', 'Open Sans Condensed', Helvetica, Arial, sans-serif;
   font-size: 30px;
   text-decoration: none;
   font-weight: 700;
@@ -165,7 +165,7 @@ hr {
   transition: opacity 0.1s ease-in-out;
   -moz-transition: opacity 0.1s ease-in-out;
   -webkit-transition: opacity 0.1s ease-in-out;
-  font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+  font-family: 'Cabin', 'Open Sans', Helvetica, Arial, sans-serif;
   white-space: nowrap;
   display: flex;
   align-items: center;
@@ -285,11 +285,12 @@ hr {
 .banner {
   position: relative;
   font-size: 16px;
+  font-color: white;
   font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif;
   font-weight: 300;
   line-height: 1.5;
   overflow-x: auto;
-  background-color: #005cbf;
+  background-color: #2e0549;
   display: flex;
 }
 
@@ -301,7 +302,7 @@ hr {
 }
 
 .banner .banner-table a {
-  color: #a3cfff;
+  color: #813fad73;
   text-decoration: none;
 }
 
