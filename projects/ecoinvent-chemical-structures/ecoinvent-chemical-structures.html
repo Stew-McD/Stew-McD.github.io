@@ -1,0 +1,121 @@
+<!doctype html>
+<html>
+
+<head>
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-93X03Q6586"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+
+    gtag('config', 'G-93X03Q6586');
+  </script>
+  <!-- End Google Analytics -->
+  <title>Ecoinvent Chemical Structures | Projects | Stewart Charles McDowall</title>
+  <meta name="description"
+    content="Ecoinvent Chemical Structures, a project of Stew-McD, Stewart McDowall)">
+  <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" media="screen" rel="stylesheet"
+    type="text/css" />
+  <link href="css/frame.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/controls.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href="css/custom.css" media="screen" rel="stylesheet" type="text/css" />
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300,700' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" rel="stylesheet">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="js/menu.js"></script>
+  <script src="js/footer.js"></script>
+  <style>
+    .menu-index {
+      color: rgb(255, 255, 255) !important;
+      opacity: 1 !important;
+      font-weight: 700 !important;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="menu-container"></div>
+  <div class="content-container">
+    <div class="content">
+      <div class="content-table flex-column">
+        <div class="flex-row">
+          <div class="flex-item flex-column">
+            <h1>Ecoinvent Chemical Structures</h1>
+            <h2>Why, what, how?</h2>
+            <p class="text">
+              When building LCA inventories of chemical processes, it is sometimes necessary to use proxy chemicals to
+              represent some
+              of the inputs and outputs that cannot be found in the database. When this is the case, it is important to
+              ensure that
+              the proxy chemicals are as similar as possible to the real chemicals that they are replacing.
+            </p>
+            <p class="text">
+              Usually, one would need to search on the internet to see the structures of the chemicals, which are
+              sometimes listed in
+              the database under non-systematic names that give no hint of the structure. This gets rather annoying and
+              makes it
+              easier to miss the best match or choose the wrong proxy.
+            </p>
+            <p class="text">
+              To make this process easier, I have processed the ecoinvent 3.10 database to extract the chemical abstract
+              (CAS) numbers
+              and (where possible) match each one to its structure. This allows one to do a quick visual scan through
+              the
+              structures
+              to find the most appropriate proxy. Additional chemical information is also obtained, such as the SMILES
+              string and the
+              InChI code, formulas, and molecular weights and synonyms.
+            </p>
+            <p class="text">
+              The source code, data and images related to processing the database and collecting the structures is
+              available on <a
+                href="https://github.com/Stew-McD/brightway-scripts/tree/main/ecoinvent-chemical_structures">
+                Github</a>.
+
+            <h2>The chemical structure gallery</h2>
+            <p class="text">
+              On this <a href="/projects/ecoinvent-chemical-structures/gallery-ecoinvent-chemical-structures.html"> page
+              </a> you
+              can find a gallery the images of the structures and their information, sorted by molecular weight.
+              Click an image
+              to find out more, including an embedded external search function for ecoinvent ecoquery and PubChem.
+
+            </p>
+            <p class="text">
+              The images are in SVG format and are named `mW_CAS.svg`,
+              where `mW` is the rounded molecular weight and `CAS` is the CAS number. Each image is annotated with
+              the
+              CAS number,
+              ecoinvent name, IUPAC name, smiles string, formula and synonyms.
+
+              Ideally, the SVG text should be
+              searchable,
+              so you can
+              hit ctrl+f and search for whatever you are looking for and see the structure and other information
+              instantly.
+              (this is at the moment, due to some html mysteries, so you need to open the image in a separate tab to select text or search)
+            </p>
+            Optimally, this
+            presentation
+            would be interactive somehow, with filtering and sorting
+            options, but I don't have the time to do that right now. If you want to do it, feel free to fork
+            the
+            repo and
+            make a pull request.
+            </p>
+            <h2>Example structure</h2>
+            <p class="text">
+              <img src="/assets/projects/ecoinvent-chemical-structures/images/0924_16090-02-1.svg"
+                alt="Example chemical structure">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="footer-container"></div>
+</body>
+
+</html>

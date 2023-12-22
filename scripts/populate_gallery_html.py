@@ -2,7 +2,7 @@ from pathlib import Path
 
 # Edit these variables to match the project
 page_title = "Chemical structure gallery | ecoinvent 3.10"
-project = "ecoinvent_chemical-structures"
+project = "ecoinvent-chemical-structures"
 dir_images = "images"
 root_path = Path("/home/stew/code/gh/Stew-McD.github.io/")
 assets_path = Path("assets")
@@ -17,7 +17,9 @@ assets_path = assets_path / "projects" / project / dir_images
 svg_filenames = list(img_path.glob("*.svg"))
 svg_filenames.sort(reverse=True)
 # Generate the JavaScript array of image paths
-image_paths = ",\n".join(f'"../../assets/projects/{project}/images/{f.name}"' for f in svg_filenames)
+image_paths = ",\n".join(
+    f'"../../assets/projects/{project}/images/{f.name}"' for f in svg_filenames
+)
 
 
 # Read the original HTML file
@@ -25,7 +27,7 @@ with open(template_html, "r") as file:
     html = file.read()
 
 # Replace the placeholder with the generated image paths
-html = html.replace('IMAGE_PATH_LIST', image_paths).replace('PAGE_TITLE', page_title)
+html = html.replace("IMAGE_PATH_LIST", image_paths).replace("PAGE_TITLE", page_title)
 
 # Write the updated HTML back to the file
 with open(project_html, "w") as file:

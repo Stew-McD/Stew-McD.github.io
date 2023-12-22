@@ -11,8 +11,28 @@
 		<lastmod>2023-12-19</lastmod>
 	</url>
 	<url>
-		<loc>https://Stew-McD.github.io/projects/ecoinvent_chemical-structures/gallery-ecoinvent_chemical-structures.html</loc>
+		<loc>https://Stew-McD.github.io/projects/ecoinvent-chemical-structures/gallery-ecoinvent-chemical-structures.html</loc>
 		<priority>0.89</priority>
 		<lastmod>2023-12-21</lastmod>
+	</url>
+	<url>
+		<loc>https://www.Stew-McD.github.io/projects.html</loc>
+		<priority>0.75</priority>
+		<lastmod>2023-12-22</lastmod>
+	</url>
+	<url>
+		<loc>https://www.Stew-McD.github.io/stewart-charles-mcdowall.html</loc>
+		<priority>0.75</priority>
+		<lastmod>2023-12-22</lastmod>
+	</url>
+	<url>
+		<loc>https://www.Stew-McD.github.io/menu_stewart-charles-mcdowall.html</loc>
+		<priority>0.75</priority>
+		<lastmod>2023-12-22</lastmod>
+	</url>
+	<url>
+		<loc>https://www.Stew-McD.github.io/projects/ecoinvent-chemical-structures/ecoinvent-chemical-structures.html</loc>
+		<priority>0.25</priority>
+		<lastmod>2023-12-22</lastmod>
 	</url>
 </urlset>
