@@ -232,7 +232,7 @@ hr {
 }
 
 .menu .menu-items .dropdown .dropdown-content a:hover {
-  background-color: #ddd;
+  background-color: #C29BC7;
   color: black;
 }
 
@@ -1470,7 +1470,7 @@ ol.nested>li:before {
     margin-top: 10px;
     position: relative;
     display: block;
-    background-color: inherit;
+    background-color: #C29BC7;
     color: inherit;
     box-shadow: none;
     border-top: 0;
@@ -1499,7 +1499,7 @@ ol.nested>li:before {
   }
 
   .menu .menu-items .dropdown .dropdown-content a:hover {
-    background-color: inherit;
+    background-color: #C29BC7;
     color: inherit;
   }
 
