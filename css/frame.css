@@ -509,6 +509,14 @@ hr {
   max-width: 140px;
 }
 
+.max-width-600 {
+  max-width: 600px;
+}
+
+.max-width-200 {
+  max-width: 200px;
+}
+
 ol.publication {
   display: flex;
   flex-direction: column-reverse;
