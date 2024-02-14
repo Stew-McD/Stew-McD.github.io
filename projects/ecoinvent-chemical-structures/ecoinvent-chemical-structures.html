@@ -52,8 +52,7 @@
             <h2>Why, what, how?</h2>
             <p class="text">
               When building LCA inventories of chemical processes, it is sometimes necessary to use proxy chemicals to
-              represent some
-              of the inputs and outputs that cannot be found in the database. When this is the case, it is important to
+              represent inputs and outputs that cannot be found in the database. When this is the case, it is important to
               ensure that
               the proxy chemicals are as similar as possible to the real chemicals that they are replacing.
             </p>
@@ -72,13 +71,13 @@
               structures
               to find the most appropriate proxy. Additional chemical information is also obtained, such as the SMILES
               string and the
-              InChI code, formulas, and molecular weights and synonyms.
+              InChI code, formulas, and molecular weights and synonyms. An important caveat here is, of course, that while the structures of two chemicals may be similar, the production processes and environmental impacts may be quite different. The structure, can of course, be a useful starting point for narrowing the search.
             </p>
             <p class="text">
               The source code, data and images related to processing the database and collecting the structures is
               available on <a
                 href="https://github.com/Stew-McD/brightway-scripts/tree/main/ecoinvent-chemical_structures">
-                Github</a>.
+                Github</a>. The changes needed to implement this with brightway2-io have now been merged into the main branch with <a href="https://github.com/brightway-lca/brightway2-io/pull/237">pull request 237.</a>
             </p>
             <h2>The chemical structure gallery</h2>
             <p class="text">
