@@ -135,6 +135,39 @@
         height: 80vh;
         border: 5px;
         margin-bottom: 10px;
+        background-color: #2e4714;
+        color: white;
+      }
+      
+      .json-container {
+        background-color: #2e4714;
+        color: white;
+        padding: 10px;
+        font-family: 'Courier New', monospace;
+        white-space: pre-wrap;
+        overflow: auto;
+        height: 80vh;
+        border: 1px solid #555;
+      }
+      
+      .json-key {
+        color: #87CEEB; /* Sky blue for keys */
+      }
+      
+      .json-string {
+        color: #98FB98; /* Pale green for strings */
+      }
+      
+      .json-number {
+        color: #FFB6C1; /* Light pink for numbers */
+      }
+      
+      .json-boolean {
+        color: #DDA0DD; /* Plum for booleans */
+      }
+      
+      .json-null {
+        color: #F0E68C; /* Khaki for null */
       }
     </style>
   </head>
@@ -161,6 +194,67 @@
             <a style="color: white;" id="pubchemLink" target="pubchemFrame">PubChem</a>
           </summary>
           <iframe name="pubchemFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="normanLink" target="normanFrame">NORMAN Database (enter CAS manually)</a>
+          </summary>
+          <iframe name="normanFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="normanSubstanceLink" onclick="loadJSON('normanSubstance')">NORMAN Substance Database</a>
+          </summary>
+          <div id="normanSubstanceFrame" class="json-container" style="display: none;">Click the link above to load data...</div>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="normanEcotoxLink" onclick="loadJSON('normanEcotox')">NORMAN Ecotoxicology Database</a>
+          </summary>
+          <div id="normanEcotoxFrame" class="json-container" style="display: none;">Click the link above to load data...</div>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="epiSuiteLink" target="epiSuiteFrame">EPI Suite™ </a>
+          </summary>
+          <p style="color: white;">Estimation Programs Interface for chemical properties: <a style="color: #87CEEB;" href="https://episuite.dev/EpiWebSuite/#/" target="_blank">https://episuite.dev/EpiWebSuite/#/</a></p>
+          <p style="color: white;">Result link: <a style="color: #87CEEB;" id="epiSuiteCasLink" href="#" target="_blank">Click to open EPI Suite results</a></p>
+          <iframe name="epiSuiteFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="epiSuiteApiLink" onclick="loadJSON('epiSuiteApi')">EPI Suite API</a>
+          </summary>
+          <div id="epiSuiteApiFrame" class="json-container" style="display: none;">Click the link above to load API data...</div>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="identifiersLink" target="identifiersFrame">Identifiers.org</a>
+          </summary>
+          <p style="color: white;">Chemical identifier resolution service</p>
+          <iframe name="identifiersFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="comptoxLink" target="comptoxFrame">EPA CompTox Dashboard</a>
+          </summary>
+          <p style="color: white;">No direct link (because CAS <--> DTXSID): <a style="color: #87CEEB;" href="https://comptox.epa.gov/dashboard/chemical/details/DTXSID10230013" target="_blank">Example link</a></p>
+          <iframe name="comptoxFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="nistLink" target="nistFrame">NIST WebBook</a>
+          </summary>
+          <p style="color: white;">NIST Chemistry WebBook - thermochemical data</p>
+          <p style="color: white;">Direct link: <a style="color: #87CEEB;" id="nistCasLink" href="#" target="_blank">Click to open NIST WebBook</a></p>
+          <iframe name="nistFrame"></iframe>
+        </details>
+        <details>
+          <summary>
+            <a style="color: white;" id="chemspiderLink" target="chemspiderFrame">ChemSpider (enter CAS manually)</a>
+          </summary>
+          <p style="color: white;">Chemical database with structure search</p>
+          <iframe name="chemspiderFrame"></iframe>
         </details>
       </div>
 
@@ -745,11 +839,39 @@
         
           var parts = elem.children[0].src.split('_')
           var chemicalId = parts[parts.length - 1].split('.')[0]
+          var paddedCasNumber = padCasNumber(chemicalId)
+          currentChemicalId = chemicalId; // Store for JSON loading
           var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
           var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+          var normanUrl = 'https://www.norman-network.com/nds/common'
+          var epiSuiteUrl = 'https://episuite.dev/EpiWebSuite/#/results;cas=' + paddedCasNumber
+          var identifiersUrl = 'https://identifiers.org/cas:' + chemicalId
+          var comptoxUrl = 'https://comptox.epa.gov/dashboard/'
+          var nistUrl = 'https://webbook.nist.gov/cgi/cbook.cgi?ID=' + chemicalId + '&Units=SI'
+          var chemspiderUrl = 'https://www.chemspider.com'
         
           document.getElementById('ecoLink').href = ecoUrl
           document.getElementById('pubchemLink').href = pubchemUrl
+          document.getElementById('normanLink').href = normanUrl
+          document.getElementById('epiSuiteLink').href = epiSuiteUrl
+          document.getElementById('identifiersLink').href = identifiersUrl
+          document.getElementById('comptoxLink').href = comptoxUrl
+          document.getElementById('nistLink').href = nistUrl
+          document.getElementById('chemspiderLink').href = chemspiderUrl
+          
+          // Update the CAS-specific link
+          var epiSuiteCasLinkElement = document.getElementById('epiSuiteCasLink')
+          if (epiSuiteCasLinkElement) {
+            epiSuiteCasLinkElement.href = epiSuiteUrl
+            epiSuiteCasLinkElement.textContent = epiSuiteUrl
+          }
+          
+          // Update the NIST direct link
+          var nistCasLinkElement = document.getElementById('nistCasLink')
+          if (nistCasLinkElement) {
+            nistCasLinkElement.href = nistUrl
+            nistCasLinkElement.textContent = nistUrl
+          }
         }
         
         function closeSidebar() {
@@ -758,12 +880,90 @@
           container.style.marginLeft = '0' // Reset grid container
         }
         
+        var currentChemicalId = '';
+        
+        function padCasNumber(casNumber) {
+          // Split the CAS number by hyphens
+          var parts = casNumber.split('-');
+          if (parts.length === 3) {
+            // Pad the first part with leading zeros to make it at least 6 digits
+            parts[0] = parts[0].padStart(6, '0');
+            return parts.join('-');
+          }
+          return casNumber; // Return original if not in expected format
+        }
+        
+        function loadJSON(type) {
+          if (!currentChemicalId) {
+            alert('Please select a chemical structure first');
+            return;
+          }
+          
+          var url = '';
+          var containerId = '';
+          
+          if (type === 'normanSubstance') {
+            url = 'https://www.norman-network.com/nds/api/susdat/casrn/' + currentChemicalId + '/JSON';
+            containerId = 'normanSubstanceFrame';
+          } else if (type === 'normanEcotox') {
+            url = 'https://www.norman-network.com/nds/api/ecotox/casrn/' + currentChemicalId + '/JSON';
+            containerId = 'normanEcotoxFrame';
+          } else if (type === 'epiSuiteApi') {
+            var paddedCasNumber = padCasNumber(currentChemicalId);
+            url = 'https://episuite.dev/EpiWebSuite/api/search?query=' + paddedCasNumber;
+            containerId = 'epiSuiteApiFrame';
+          }
+          
+          var container = document.getElementById(containerId);
+          container.style.display = 'block';
+          container.innerHTML = '<div style="color: #87CEEB; margin-bottom: 10px; word-break: break-all;"><strong>API Endpoint:</strong><br>' + url + '</div>Loading...';
+          
+          fetch(url)
+            .then(response => response.json())
+            .then(data => {
+              container.innerHTML = '<div style="color: #87CEEB; margin-bottom: 10px; word-break: break-all;"><strong>API Endpoint:</strong><br>' + url + '</div>' + formatJSON(data);
+            })
+            .catch(error => {
+              container.innerHTML = '<div style="color: #87CEEB; margin-bottom: 10px; word-break: break-all;"><strong>API Endpoint:</strong><br>' + url + '</div>Error loading data: ' + error.message;
+            });
+        }
+        
+        function formatJSON(obj) {
+          return JSON.stringify(obj, null, 2)
+            .replace(/\"([^\"]+)\":/g, '<span class="json-key">"$1":</span>')
+            .replace(/: \"([^\"]*)\"/g, ': <span class="json-string">"$1"</span>')
+            .replace(/: (\d+)/g, ': <span class="json-number">$1</span>')
+            .replace(/: (true|false)/g, ': <span class="json-boolean">$1</span>')
+            .replace(/: null/g, ': <span class="json-null">null</span>');
+        }
+        
         function updateLinks(chemicalId) {
+          var paddedCasNumber = padCasNumber(chemicalId)
+          currentChemicalId = chemicalId; // Store for JSON loading
           var ecoUrl = 'https://ecoquery.ecoinvent.org/3.10/cutoff/search?query=' + chemicalId + '&currentPage=2&pageSize=5'
           var pubchemUrl = 'https://pubchem.ncbi.nlm.nih.gov/#query=' + chemicalId
+          var normanUrl = 'https://www.norman-network.com/nds/common'
+          var epiSuiteUrl = 'https://episuite.dev/EpiWebSuite/#/results;cas=' + paddedCasNumber
+          var identifiersUrl = 'https://identifiers.org/cas:' + chemicalId
+          var comptoxUrl = 'https://comptox.epa.gov/dashboard/'
+          var nistUrl = 'https://webbook.nist.gov/cgi/cbook.cgi?ID=' + chemicalId + '&Units=SI'
+          var chemspiderUrl = 'https://www.chemspider.com'
         
           document.getElementById('ecoLink').href = ecoUrl
           document.getElementById('pubchemLink').href = pubchemUrl
+          document.getElementById('normanLink').href = normanUrl
+          document.getElementById('epiSuiteLink').href = epiSuiteUrl
+          document.getElementById('identifiersLink').href = identifiersUrl
+          document.getElementById('comptoxLink').href = comptoxUrl
+          document.getElementById('nistLink').href = nistUrl
+          document.getElementById('chemspiderLink').href = chemspiderUrl
+          
+          // Update the CAS-specific link
+          var epiSuiteCasLinkElement = document.getElementById('epiSuiteCasLink')
+          if (epiSuiteCasLinkElement) {
+            epiSuiteCasLinkElement.href = epiSuiteUrl
+            epiSuiteCasLinkElement.textContent = epiSuiteUrl
+          }
         }
         
         document.querySelectorAll('.svg-image').forEach(function (img) {
